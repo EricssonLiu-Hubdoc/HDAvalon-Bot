@@ -4,7 +4,7 @@ const axios = require('axios');
 const RoboMerlin_Username = 'UMDJG7V0V'
 
 const bot = new SlackBot({
-    token: 'xoxb-721230650737-727628267029-ShCKD3bSnZJKSnvTtzasefzb',
+    token: 'xoxb-721230650737-727628267029-A64v1vCjlnmchwtpMOWTVZM4',
     name: 'RoboMerlin',
 });
 
@@ -41,7 +41,7 @@ function handleMessage(message) {
         roles = createGame ();
     }
     else if (message.includes('add')){
-        roles = addRoles (roles);
+        roles = addRoles (message, roles);
     }
     else if (message.includes('win')){
         if (message.includes('good')){
@@ -50,7 +50,7 @@ function handleMessage(message) {
         else if (message.includes('bad')){
             winningTeam = false;
         }
-        else (){
+        else {
             return bot.postMessageToChannel('slack-bot', 'Are you stupid enter good win or bad win it\'s not that hard', {});
         }
     }
@@ -70,16 +70,16 @@ function createGame() {
         count: 0,
         merlin: null,
         percival: null,
-        servants: [],
+        servant: [],
         mordred: null,
         morgana: null,
         assassin: null,
         oberon: null,
-        minions: [],
+        minion: [],
     }
 };
 
-function addRoles(roles) {
+function addRoles(message, roles) {
     if (!roles){
         return bot.postMessageToChannel('slack-bot', 'Please start new game', params)
     }
@@ -97,7 +97,7 @@ function addRoles(roles) {
         else {
             message = message.substr(message.indexOf(' ') + 1, message.length);
         }
-        if (!validRoles.includes(currentRole)){
+        if (!(validRoles.includes(currentRole))){
             return bot.postMessageToChannel('slack-bot', 'Role does not exist try again.', params)
         }
         if (currentRole === 'minion' || currentRole === 'servant'){
